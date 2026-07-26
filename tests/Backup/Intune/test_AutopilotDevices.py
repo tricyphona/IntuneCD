@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.AutopilotDevices import AutopilotDevicesBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestAutopilotDevicesBackupModule(unittest.TestCase):
@@ -11,7 +12,7 @@ class TestAutopilotDevicesBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = AutopilotDevicesBackupModule()
 
-    @patch.object(AutopilotDevicesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(AutopilotDevicesBackupModule, "process_data")
     def test_main(self, mock_process_data, mock_make_graph_request):
         """Test that main calls make_graph_request and process_data."""
@@ -30,7 +31,7 @@ class TestAutopilotDevicesBackupModule(unittest.TestCase):
             log_message=None,
         )
 
-    @patch.object(AutopilotDevicesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(AutopilotDevicesBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -44,7 +45,7 @@ class TestAutopilotDevicesBackupModule(unittest.TestCase):
         )
 
     @patch.object(AutopilotDevicesBackupModule, "process_data")
-    @patch.object(AutopilotDevicesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(AutopilotDevicesBackupModule, "log")
     def test_main_logs_exception_process_data(
         self, mock_log, mock_make_graph_request, mock_process_data

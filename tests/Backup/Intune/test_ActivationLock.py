@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.Activationlock import ActivationLockBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestActivationLockBackupModule(unittest.TestCase):
@@ -11,8 +12,8 @@ class TestActivationLockBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = ActivationLockBackupModule()
 
-    @patch.object(ActivationLockBackupModule, "make_graph_request")
-    @patch.object(ActivationLockBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(ActivationLockBackupModule, "process_data")
     def test_main(self, mock_process_data, mock_batch_request, mock_make_graph_request):
         """Test that the main method gets the graph data and processes it correctly"""
@@ -41,7 +42,7 @@ class TestActivationLockBackupModule(unittest.TestCase):
             log_message=None,
         )
 
-    @patch.object(ActivationLockBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ActivationLockBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that the main method logs an exception when an exception is raised getting the graph data"""
@@ -55,8 +56,8 @@ class TestActivationLockBackupModule(unittest.TestCase):
         )
 
     @patch.object(ActivationLockBackupModule, "process_data")
-    @patch.object(ActivationLockBackupModule, "make_graph_request")
-    @patch.object(ActivationLockBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(ActivationLockBackupModule, "log")
     def test_main_logs_exception_process_data(
         self, mock_log, mock_batch_request, mock_make_graph_request, mock_process_data

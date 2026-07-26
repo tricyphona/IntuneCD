@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.CustomAttributes import CustomAttributesBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestCustomAttributesBackupModule(unittest.TestCase):
@@ -12,8 +13,8 @@ class TestCustomAttributesBackupModule(unittest.TestCase):
         self.module = CustomAttributesBackupModule()
 
     @patch.object(CustomAttributesBackupModule, "_save_script")
-    @patch.object(CustomAttributesBackupModule, "make_graph_request")
-    @patch.object(CustomAttributesBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(CustomAttributesBackupModule, "process_data")
     def test_main(
         self, mock_process_data, mock_batch_request, mock_make_graph_request, _
@@ -43,7 +44,7 @@ class TestCustomAttributesBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(CustomAttributesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(CustomAttributesBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -58,8 +59,8 @@ class TestCustomAttributesBackupModule(unittest.TestCase):
 
     @patch.object(CustomAttributesBackupModule, "_save_script")
     @patch.object(CustomAttributesBackupModule, "process_data")
-    @patch.object(CustomAttributesBackupModule, "batch_request")
-    @patch.object(CustomAttributesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(CustomAttributesBackupModule, "log")
     def test_main_logs_exception_process_data(
         self,

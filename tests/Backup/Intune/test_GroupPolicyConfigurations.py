@@ -5,6 +5,7 @@ from unittest.mock import call, patch
 from src.IntuneCD.backup.Intune.GroupPolicyConfigurations import (
     GroupPolicyConfigurationsBackupModule,
 )
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestGroupPolicyConfigurationsBackupModule(unittest.TestCase):
@@ -21,7 +22,7 @@ class TestGroupPolicyConfigurationsBackupModule(unittest.TestCase):
             }
         ]
 
-    @patch.object(GroupPolicyConfigurationsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(GroupPolicyConfigurationsBackupModule, "process_data")
     def test_main(self, mock_process_data, mock_make_graph_request):
         """Test that main calls make_graph_request and process_data."""
@@ -56,7 +57,7 @@ class TestGroupPolicyConfigurationsBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(GroupPolicyConfigurationsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(GroupPolicyConfigurationsBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -70,7 +71,7 @@ class TestGroupPolicyConfigurationsBackupModule(unittest.TestCase):
         )
 
     @patch.object(GroupPolicyConfigurationsBackupModule, "process_data")
-    @patch.object(GroupPolicyConfigurationsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(GroupPolicyConfigurationsBackupModule, "log")
     def test_main_logs_exception_process_data(
         self, mock_log, mock_make_graph_request, mock_process_data

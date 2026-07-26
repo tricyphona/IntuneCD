@@ -5,6 +5,7 @@ from unittest.mock import patch
 from src.IntuneCD.backup.Intune.ProactiveRemediation import (
     ProactiveRemediationScriptBackupModule,
 )
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestProactiveRemediationScriptBackupModule(unittest.TestCase):
@@ -13,8 +14,8 @@ class TestProactiveRemediationScriptBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = ProactiveRemediationScriptBackupModule()
 
-    @patch.object(ProactiveRemediationScriptBackupModule, "make_graph_request")
-    @patch.object(ProactiveRemediationScriptBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(ProactiveRemediationScriptBackupModule, "process_data")
     @patch.object(ProactiveRemediationScriptBackupModule, "_save_script")
     def test_main(
@@ -41,7 +42,7 @@ class TestProactiveRemediationScriptBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(ProactiveRemediationScriptBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ProactiveRemediationScriptBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -54,8 +55,8 @@ class TestProactiveRemediationScriptBackupModule(unittest.TestCase):
             msg=f"Error getting Proactive Remediation data from {self.module.endpoint + self.module.CONFIG_ENDPOINT}: Test exception",
         )
 
-    @patch.object(ProactiveRemediationScriptBackupModule, "make_graph_request")
-    @patch.object(ProactiveRemediationScriptBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(ProactiveRemediationScriptBackupModule, "process_data")
     @patch.object(ProactiveRemediationScriptBackupModule, "_save_script")
     @patch.object(ProactiveRemediationScriptBackupModule, "log")

@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.Applications import ApplicationsBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestApplicationsBackupModule(unittest.TestCase):
@@ -16,10 +17,10 @@ class TestApplicationsBackupModule(unittest.TestCase):
             "displayName": "Test App",
         }
 
-    @patch.object(ApplicationsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ApplicationsBackupModule, "process_data")
-    @patch.object(ApplicationsBackupModule, "batch_assignment")
-    @patch.object(ApplicationsBackupModule, "make_audit_request")
+    @patch.object(GraphModule, "batch_assignment")
+    @patch.object(GraphModule, "make_audit_request")
     def test_main(
         self,
         mock_make_audit_request,
@@ -50,7 +51,7 @@ class TestApplicationsBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(ApplicationsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ApplicationsBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -63,10 +64,10 @@ class TestApplicationsBackupModule(unittest.TestCase):
             msg=f"Error getting Application data from {self.module.endpoint + self.module.CONFIG_ENDPOINT}: Test exception",
         )
 
-    @patch.object(ApplicationsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ApplicationsBackupModule, "process_data")
-    @patch.object(ApplicationsBackupModule, "batch_assignment")
-    @patch.object(ApplicationsBackupModule, "make_audit_request")
+    @patch.object(GraphModule, "batch_assignment")
+    @patch.object(GraphModule, "make_audit_request")
     @patch.object(ApplicationsBackupModule, "log")
     def test_main_logs_exception_process_data(
         self,

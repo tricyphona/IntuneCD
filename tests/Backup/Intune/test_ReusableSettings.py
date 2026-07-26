@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.ReusableSettings import ReusableSettingsBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestReusableSettingsBackupModule(unittest.TestCase):
@@ -11,7 +12,7 @@ class TestReusableSettingsBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = ReusableSettingsBackupModule()
 
-    @patch.object(ReusableSettingsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ReusableSettingsBackupModule, "process_data")
     @patch.object(ReusableSettingsBackupModule, "_save_script")
     def test_main(self, _, mock_process_data, mock_make_graph_request):
@@ -47,7 +48,7 @@ class TestReusableSettingsBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(ReusableSettingsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ReusableSettingsBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -60,7 +61,7 @@ class TestReusableSettingsBackupModule(unittest.TestCase):
             msg=f"Error getting Reusable Policy Setting data from {self.module.endpoint + self.module.CONFIG_ENDPOINT}: Test exception",
         )
 
-    @patch.object(ReusableSettingsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ReusableSettingsBackupModule, "process_data")
     @patch.object(ReusableSettingsBackupModule, "log")
     @patch.object(ReusableSettingsBackupModule, "_save_script")

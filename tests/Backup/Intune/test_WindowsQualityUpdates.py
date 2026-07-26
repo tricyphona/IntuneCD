@@ -5,6 +5,7 @@ from unittest.mock import patch
 from src.IntuneCD.backup.Intune.WindowsQualityUpdates import (
     WindowsQualityUpdatesBackupModule,
 )
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestWindowsQualityUpdatesBackupModule(unittest.TestCase):
@@ -13,7 +14,7 @@ class TestWindowsQualityUpdatesBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = WindowsQualityUpdatesBackupModule()
 
-    @patch.object(WindowsQualityUpdatesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(WindowsQualityUpdatesBackupModule, "process_data")
     def test_main(self, mock_process_data, mock_make_graph_request):
         """Test that main calls make_graph_request and process_data."""
@@ -36,7 +37,7 @@ class TestWindowsQualityUpdatesBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(WindowsQualityUpdatesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(WindowsQualityUpdatesBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -50,7 +51,7 @@ class TestWindowsQualityUpdatesBackupModule(unittest.TestCase):
         )
 
     @patch.object(WindowsQualityUpdatesBackupModule, "process_data")
-    @patch.object(WindowsQualityUpdatesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(WindowsQualityUpdatesBackupModule, "log")
     def test_main_logs_exception_process_data(
         self, mock_log, mock_make_graph_request, mock_process_data

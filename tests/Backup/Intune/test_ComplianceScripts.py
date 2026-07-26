@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.ComplianceScripts import ComplianceScriptsBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestComplianceScriptsBackupModule(unittest.TestCase):
@@ -11,8 +12,8 @@ class TestComplianceScriptsBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = ComplianceScriptsBackupModule()
 
-    @patch.object(ComplianceScriptsBackupModule, "make_graph_request")
-    @patch.object(ComplianceScriptsBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(ComplianceScriptsBackupModule, "process_data")
     @patch.object(ComplianceScriptsBackupModule, "_save_script")
     def test_main(
@@ -41,7 +42,7 @@ class TestComplianceScriptsBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(ComplianceScriptsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ComplianceScriptsBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -55,8 +56,8 @@ class TestComplianceScriptsBackupModule(unittest.TestCase):
         )
 
     @patch.object(ComplianceScriptsBackupModule, "process_data")
-    @patch.object(ComplianceScriptsBackupModule, "make_graph_request")
-    @patch.object(ComplianceScriptsBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(ComplianceScriptsBackupModule, "log")
     @patch.object(ComplianceScriptsBackupModule, "_save_script")
     def test_main_logs_exception_process_data(

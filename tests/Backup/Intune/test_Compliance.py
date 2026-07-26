@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import call, patch
 
 from src.IntuneCD.backup.Intune.Compliance import ComplianceBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestComplianceBackupModule(unittest.TestCase):
@@ -25,7 +26,7 @@ class TestComplianceBackupModule(unittest.TestCase):
             ]
         }
 
-    @patch.object(ComplianceBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ComplianceBackupModule, "process_data")
     @patch.object(ComplianceBackupModule, "_get_notification_template")
     def test_main(self, _, mock_process_data, mock_make_graph_request):
@@ -63,7 +64,7 @@ class TestComplianceBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(ComplianceBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ComplianceBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -77,7 +78,7 @@ class TestComplianceBackupModule(unittest.TestCase):
         )
 
     @patch.object(ComplianceBackupModule, "process_data")
-    @patch.object(ComplianceBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ComplianceBackupModule, "log")
     def test_main_logs_exception_process_data(
         self, mock_log, mock_make_graph_request, mock_process_data

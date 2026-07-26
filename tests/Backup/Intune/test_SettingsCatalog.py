@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.SettingsCatalog import SettingsCatalogBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestSettingsCatalogBackupModule(unittest.TestCase):
@@ -11,10 +12,10 @@ class TestSettingsCatalogBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = SettingsCatalogBackupModule()
 
-    @patch.object(SettingsCatalogBackupModule, "make_graph_request")
-    @patch.object(SettingsCatalogBackupModule, "batch_request")
-    @patch.object(SettingsCatalogBackupModule, "make_audit_request")
-    @patch.object(SettingsCatalogBackupModule, "get_object_details")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
+    @patch.object(GraphModule, "make_audit_request")
+    @patch.object(GraphModule, "get_object_details")
     @patch.object(SettingsCatalogBackupModule, "process_data")
     def test_main(
         self,
@@ -49,7 +50,7 @@ class TestSettingsCatalogBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(SettingsCatalogBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(SettingsCatalogBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -62,10 +63,10 @@ class TestSettingsCatalogBackupModule(unittest.TestCase):
             msg=f"Error getting Settings Catalog data from {self.module.endpoint + self.module.CONFIG_ENDPOINT}: Test exception",
         )
 
-    @patch.object(SettingsCatalogBackupModule, "make_graph_request")
-    @patch.object(SettingsCatalogBackupModule, "batch_request")
-    @patch.object(SettingsCatalogBackupModule, "make_audit_request")
-    @patch.object(SettingsCatalogBackupModule, "get_object_details")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
+    @patch.object(GraphModule, "make_audit_request")
+    @patch.object(GraphModule, "get_object_details")
     @patch.object(SettingsCatalogBackupModule, "process_data")
     @patch.object(SettingsCatalogBackupModule, "log")
     def test_main_logs_exception_process_data(

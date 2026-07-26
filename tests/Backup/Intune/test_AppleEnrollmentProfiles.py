@@ -5,6 +5,7 @@ from unittest.mock import patch
 from src.IntuneCD.backup.Intune.AppleEnrollmentProfiles import (
     AppleEnrollmentProfilesBackupModule,
 )
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestAppleEnrollmentProfilesBackupModule(unittest.TestCase):
@@ -13,8 +14,8 @@ class TestAppleEnrollmentProfilesBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = AppleEnrollmentProfilesBackupModule()
 
-    @patch.object(AppleEnrollmentProfilesBackupModule, "make_graph_request")
-    @patch.object(AppleEnrollmentProfilesBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(AppleEnrollmentProfilesBackupModule, "process_data")
     def test_main(self, mock_process_data, mock_batch_request, mock_make_graph_request):
         """Test that main calls make_graph_request and process_data."""
@@ -43,7 +44,7 @@ class TestAppleEnrollmentProfilesBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(AppleEnrollmentProfilesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(AppleEnrollmentProfilesBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -57,9 +58,9 @@ class TestAppleEnrollmentProfilesBackupModule(unittest.TestCase):
         )
 
     @patch.object(AppleEnrollmentProfilesBackupModule, "process_data")
-    @patch.object(AppleEnrollmentProfilesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(AppleEnrollmentProfilesBackupModule, "log")
-    @patch.object(AppleEnrollmentProfilesBackupModule, "batch_request")
+    @patch.object(GraphModule, "batch_request")
     def test_main_logs_exception_process_data(
         self, mock_batch_request, mock_log, mock_make_graph_request, mock_process_data
     ):

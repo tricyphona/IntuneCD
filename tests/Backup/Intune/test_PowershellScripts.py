@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.PowershellScripts import PowershellScriptsBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestPowershellScriptsBackupModule(unittest.TestCase):
@@ -11,8 +12,8 @@ class TestPowershellScriptsBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = PowershellScriptsBackupModule()
 
-    @patch.object(PowershellScriptsBackupModule, "make_graph_request")
-    @patch.object(PowershellScriptsBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(PowershellScriptsBackupModule, "process_data")
     @patch.object(PowershellScriptsBackupModule, "_save_script")
     def test_main(
@@ -39,7 +40,7 @@ class TestPowershellScriptsBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(PowershellScriptsBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(PowershellScriptsBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -53,8 +54,8 @@ class TestPowershellScriptsBackupModule(unittest.TestCase):
         )
 
     @patch.object(PowershellScriptsBackupModule, "process_data")
-    @patch.object(PowershellScriptsBackupModule, "make_graph_request")
-    @patch.object(PowershellScriptsBackupModule, "batch_request")
+    @patch.object(GraphModule, "make_graph_request")
+    @patch.object(GraphModule, "batch_request")
     @patch.object(PowershellScriptsBackupModule, "_save_script")
     @patch.object(PowershellScriptsBackupModule, "log")
     def test_main_logs_exception_process_data(

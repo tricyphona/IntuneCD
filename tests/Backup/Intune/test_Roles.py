@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import call, patch
 
 from src.IntuneCD.backup.Intune.Roles import RolesBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestRolesBackupModule(unittest.TestCase):
@@ -12,7 +13,7 @@ class TestRolesBackupModule(unittest.TestCase):
         self.module = RolesBackupModule()
         self.module.exclude = []
 
-    @patch.object(RolesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(RolesBackupModule, "_get_group_names")
     @patch.object(RolesBackupModule, "process_data")
     def test_main(
@@ -66,7 +67,7 @@ class TestRolesBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(RolesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(RolesBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -80,7 +81,7 @@ class TestRolesBackupModule(unittest.TestCase):
         )
 
     @patch.object(RolesBackupModule, "process_data")
-    @patch.object(RolesBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(RolesBackupModule, "log")
     def test_main_logs_exception_process_data(
         self, mock_log, mock_make_graph_request, mock_process_data

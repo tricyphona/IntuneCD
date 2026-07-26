@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from src.IntuneCD.backup.Intune.ManagedGooglePlay import ManagedGooglePlayBackupModule
+from src.IntuneCD.intunecdlib.GraphModule import GraphModule
 
 
 class TestManagedGooglePlayBackupModule(unittest.TestCase):
@@ -11,7 +12,7 @@ class TestManagedGooglePlayBackupModule(unittest.TestCase):
     def setUp(self):
         self.module = ManagedGooglePlayBackupModule()
 
-    @patch.object(ManagedGooglePlayBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ManagedGooglePlayBackupModule, "process_data")
     def test_main(self, mock_process_data, mock_make_graph_request):
         """Test that main calls make_graph_request and process_data."""
@@ -34,7 +35,7 @@ class TestManagedGooglePlayBackupModule(unittest.TestCase):
             },
         )
 
-    @patch.object(ManagedGooglePlayBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ManagedGooglePlayBackupModule, "log")
     def test_main_logs_exception_graph_data(self, mock_log, mock_make_graph_request):
         """Test that main logs an exception if make_graph_request raises an exception."""
@@ -48,7 +49,7 @@ class TestManagedGooglePlayBackupModule(unittest.TestCase):
         )
 
     @patch.object(ManagedGooglePlayBackupModule, "process_data")
-    @patch.object(ManagedGooglePlayBackupModule, "make_graph_request")
+    @patch.object(GraphModule, "make_graph_request")
     @patch.object(ManagedGooglePlayBackupModule, "log")
     def test_main_logs_exception_process_data(
         self, mock_log, mock_make_graph_request, mock_process_data
